@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Trade With InfinetT — AI Value Trading</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,wght@0,300;0,400;0,600;0,700;1,400&display=swap" rel="stylesheet"/>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --gold:#C9A84C;--gold-lt:#F0D080;--black:#080C12;--navy:#0B1220;
+  --card:#111827;--border:#1E2D45;--accent:#00D4FF;--green:#00C896;
+  --red:#FF4757;--white:#FFFFFF;--gray:#8899AA;--gray-lt:#C8D8E8;
+}
+html{scroll-behavior:smooth}
+body{background:var(--black);color:var(--white);font-family:'DM Sans',sans-serif;overflow-x:hidden}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(8,12,18,0.92);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);padding:0 5%}
+.nav-inner{max-width:1100px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:60px}
+.nav-logo{font-family:'Bebas Neue',sans-serif;font-size:1.5rem;color:var(--gold);letter-spacing:2px}
+.nav-cta{background:var(--gold);color:var(--black);font-weight:700;font-size:0.8rem;padding:8px 20px;letter-spacing:1px;text-transform:uppercase;text-decoration:none;transition:opacity .2s}
+.nav-cta:hover{opacity:.85}
+
+/* HERO */
+.hero{min-height:100vh;display:flex;align-items:center;padding:80px 5% 60px;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;top:-200px;right:-200px;width:700px;height:700px;background:radial-gradient(circle,rgba(201,168,76,0.08) 0%,transparent 70%);pointer-events:none}
+.hero::after{content:'';position:absolute;bottom:-100px;left:-100px;width:500px;height:500px;background:radial-gradient(circle,rgba(0,212,255,0.05) 0%,transparent 70%);pointer-events:none}
+.hero-inner{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center}
+.hero-eyebrow{font-size:0.75rem;letter-spacing:4px;color:var(--gold);text-transform:uppercase;margin-bottom:16px}
+.hero h1{font-family:'Bebas Neue',sans-serif;font-size:clamp(3rem,6vw,5.5rem);line-height:1;color:var(--white);margin-bottom:24px}
+.hero h1 span{color:var(--gold)}
+.hero-sub{font-size:1.1rem;color:var(--gray-lt);line-height:1.7;margin-bottom:32px;max-width:480px}
+.hero-cta-group{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:40px}
+.btn-primary{background:var(--gold);color:var(--black);font-weight:700;font-size:0.95rem;padding:16px 36px;text-decoration:none;letter-spacing:1px;text-transform:uppercase;transition:all .2s;display:inline-block}
+.btn-primary:hover{background:var(--gold-lt);transform:translateY(-2px)}
+.btn-secondary{border:1px solid var(--border);color:var(--gray-lt);font-size:0.9rem;padding:16px 28px;text-decoration:none;transition:all .2s;display:inline-block}
+.btn-secondary:hover{border-color:var(--gold);color:var(--white)}
+.hero-proof{display:flex;gap:32px}
+.proof-item{text-align:center}
+.proof-num{font-family:'Bebas Neue',sans-serif;font-size:2rem;color:var(--gold)}
+.proof-label{font-size:0.7rem;color:var(--gray);letter-spacing:2px;text-transform:uppercase}
+
+/* HERO CARD */
+.hero-card{background:var(--card);border:1px solid var(--border);padding:36px;position:relative}
+.hero-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--gold)}
+.hero-card h3{font-family:'Bebas Neue',sans-serif;font-size:1.4rem;color:var(--gold);letter-spacing:2px;margin-bottom:20px}
+.formula{display:flex;align-items:center;flex-wrap:wrap;gap:6px;margin-bottom:24px;padding:16px;background:rgba(0,0,0,0.3)}
+.formula-step{font-size:0.78rem;font-weight:700;color:var(--white);background:rgba(201,168,76,0.15);padding:6px 10px;letter-spacing:1px}
+.formula-arrow{color:var(--gold);font-size:1.1rem}
+.checklist{list-style:none;display:flex;flex-direction:column;gap:10px}
+.checklist li{display:flex;align-items:flex-start;gap:10px;font-size:0.9rem;color:var(--gray-lt)}
+.checklist li::before{content:'✓';color:var(--green);font-weight:700;flex-shrink:0;margin-top:1px}
+
+/* SECTION */
+section{padding:80px 5%}
+.section-inner{max-width:1100px;margin:0 auto}
+.section-tag{font-size:0.7rem;letter-spacing:4px;color:var(--gold);text-transform:uppercase;margin-bottom:12px}
+.section-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(2rem,4vw,3.2rem);line-height:1.05;margin-bottom:16px}
+.section-sub{color:var(--gray);font-size:1rem;line-height:1.7;max-width:600px;margin-bottom:48px}
+
+/* PROBLEM */
+.problem{background:var(--navy)}
+.problem-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.problem-card{background:rgba(255,71,87,0.06);border:1px solid rgba(255,71,87,0.2);padding:20px 24px}
+.problem-card h4{color:var(--red);font-size:0.95rem;font-weight:700;margin-bottom:6px}
+.problem-card p{color:var(--gray);font-size:0.88rem;line-height:1.6}
+.vs-divider{text-align:center;margin:40px 0;position:relative}
+.vs-divider::before{content:'';position:absolute;top:50%;left:0;right:0;height:1px;background:var(--border)}
+.vs-divider span{background:var(--navy);padding:0 20px;position:relative;font-family:'Bebas Neue',sans-serif;font-size:1.8rem;color:var(--gold)}
+
+/* FRAMEWORK */
+.framework-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+.fw-card{background:var(--card);border:1px solid var(--border);padding:24px 20px;transition:border-color .2s}
+.fw-card:hover{border-color:var(--gold)}
+.fw-letter{font-family:'Bebas Neue',sans-serif;font-size:3rem;color:var(--gold);line-height:1;margin-bottom:8px}
+.fw-word{font-size:0.8rem;letter-spacing:2px;color:var(--gold-lt);text-transform:uppercase;margin-bottom:8px}
+.fw-desc{font-size:0.85rem;color:var(--gray);line-height:1.5}
+
+/* MODULES */
+.modules{background:var(--navy)}
+.module-list{display:flex;flex-direction:column;gap:2px}
+.module-item{background:var(--card);border:1px solid var(--border);padding:0;cursor:pointer;transition:all .2s;overflow:hidden}
+.module-item:hover{border-color:var(--gold)}
+.module-header{display:flex;align-items:center;gap:20px;padding:20px 24px}
+.module-num{background:var(--gold);color:var(--black);font-family:'Bebas Neue',sans-serif;font-size:1.1rem;width:40px;height:40px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.module-title{font-weight:700;font-size:1rem;color:var(--white);flex:1}
+.module-tag{font-size:0.7rem;letter-spacing:2px;color:var(--gold);text-transform:uppercase;padding:4px 10px;border:1px solid rgba(201,168,76,0.3)}
+.module-chevron{color:var(--gold);font-size:1.1rem;transition:transform .3s}
+.module-item.open .module-chevron{transform:rotate(180deg)}
+.module-body{max-height:0;overflow:hidden;transition:max-height .4s ease}
+.module-item.open .module-body{max-height:300px}
+.module-content{padding:0 24px 20px 84px;display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.module-content li{font-size:0.88rem;color:var(--gray-lt);list-style:none;display:flex;align-items:flex-start;gap:8px}
+.module-content li::before{content:'▸';color:var(--gold);flex-shrink:0;font-size:0.75rem;margin-top:2px}
+.module-outcome{grid-column:1/-1;margin-top:8px;padding:10px 14px;background:rgba(0,200,150,0.08);border-left:2px solid var(--green);font-size:0.85rem;color:var(--green);font-style:italic}
+
+/* PRICING */
+.pricing-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.price-card{background:var(--card);border:1px solid var(--border);padding:36px 28px;position:relative;transition:all .3s}
+.price-card.featured{border-color:var(--gold);transform:scale(1.03)}
+.price-card.featured::before{content:'MOST POPULAR';position:absolute;top:-12px;left:50%;transform:translateX(-50%);background:var(--gold);color:var(--black);font-size:0.65rem;font-weight:700;letter-spacing:2px;padding:4px 14px}
+.price-tier{font-size:0.7rem;letter-spacing:3px;color:var(--gold);text-transform:uppercase;margin-bottom:8px}
+.price-amount{font-family:'Bebas Neue',sans-serif;font-size:3.5rem;color:var(--white);line-height:1;margin-bottom:4px}
+.price-note{font-size:0.8rem;color:var(--gray);margin-bottom:24px}
+.price-divider{height:1px;background:var(--border);margin-bottom:24px}
+.price-features{list-style:none;display:flex;flex-direction:column;gap:10px;margin-bottom:32px}
+.price-features li{font-size:0.88rem;color:var(--gray-lt);display:flex;gap:10px;align-items:flex-start}
+.price-features li::before{content:'✓';color:var(--green);font-weight:700;flex-shrink:0}
+.price-features li.locked{color:var(--gray);opacity:.5}
+.price-features li.locked::before{content:'—';color:var(--gray)}
+.price-btn{display:block;text-align:center;padding:14px;font-weight:700;font-size:0.85rem;letter-spacing:1px;text-transform:uppercase;text-decoration:none;transition:all .2s;border:1px solid var(--gold);color:var(--gold)}
+.price-btn.featured-btn{background:var(--gold);color:var(--black)}
+.price-btn:hover{background:var(--gold);color:var(--black)}
+
+/* TESTIMONIAL */
+.testimonials{background:var(--navy)}
+.testimonial-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.testi-card{background:var(--card);border:1px solid var(--border);padding:28px}
+.testi-stars{color:var(--gold);font-size:1rem;margin-bottom:12px}
+.testi-text{font-size:0.9rem;color:var(--gray-lt);line-height:1.7;margin-bottom:16px;font-style:italic}
+.testi-author{font-size:0.8rem;font-weight:700;color:var(--gold)}
+.testi-sub{font-size:0.75rem;color:var(--gray)}
+
+/* AI SECTION */
+.ai-section{background:linear-gradient(135deg,var(--black) 0%,#0D1A2E 100%);border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
+.ai-inner{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center}
+.ai-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(0,212,255,0.1);border:1px solid rgba(0,212,255,0.3);padding:6px 14px;font-size:0.75rem;color:var(--accent);letter-spacing:2px;text-transform:uppercase;margin-bottom:20px}
+.ai-features{display:flex;flex-direction:column;gap:12px;margin-top:28px}
+.ai-feat{display:flex;gap:14px;padding:14px;background:rgba(0,212,255,0.04);border:1px solid rgba(0,212,255,0.1)}
+.ai-feat-icon{font-size:1.3rem;flex-shrink:0}
+.ai-feat h4{font-size:0.9rem;font-weight:700;color:var(--white);margin-bottom:2px}
+.ai-feat p{font-size:0.82rem;color:var(--gray)}
+.ai-chat-preview{background:var(--card);border:1px solid var(--border);overflow:hidden}
+.chat-header{background:rgba(0,212,255,0.08);border-bottom:1px solid var(--border);padding:14px 18px;display:flex;align-items:center;gap:10px}
+.chat-dot{width:8px;height:8px;border-radius:50%;background:var(--green);animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+.chat-name{font-size:0.85rem;font-weight:700;color:var(--accent)}
+.chat-body{padding:18px;display:flex;flex-direction:column;gap:12px}
+.chat-msg{max-width:80%;padding:10px 14px;font-size:0.83rem;line-height:1.5}
+.chat-msg.user{background:rgba(201,168,76,0.12);border:1px solid rgba(201,168,76,0.2);align-self:flex-end;color:var(--gray-lt)}
+.chat-msg.ai{background:rgba(0,212,255,0.08);border:1px solid rgba(0,212,255,0.15);align-self:flex-start;color:var(--gray-lt)}
+.chat-msg.ai strong{color:var(--accent)}
+
+/* GUARANTEE */
+.guarantee{text-align:center}
+.guarantee-box{display:inline-block;border:1px solid var(--gold);padding:48px 64px;max-width:640px;position:relative}
+.guarantee-box::before{content:'';position:absolute;top:8px;left:8px;right:-8px;bottom:-8px;border:1px solid rgba(201,168,76,0.3);z-index:-1}
+.guarantee-icon{font-size:3rem;margin-bottom:16px}
+.guarantee-box h3{font-family:'Bebas Neue',sans-serif;font-size:2rem;color:var(--gold);margin-bottom:12px;letter-spacing:2px}
+.guarantee-box p{color:var(--gray-lt);font-size:0.95rem;line-height:1.7}
+
+/* FINAL CTA */
+.final-cta{background:var(--gold);text-align:center;padding:80px 5%}
+.final-cta h2{font-family:'Bebas Neue',sans-serif;font-size:clamp(2.5rem,5vw,4rem);color:var(--black);margin-bottom:16px}
+.final-cta p{color:rgba(0,0,0,0.7);font-size:1.05rem;margin-bottom:36px}
+.final-cta .btn-dark{background:var(--black);color:var(--gold);font-weight:700;padding:18px 48px;font-size:1rem;letter-spacing:2px;text-transform:uppercase;text-decoration:none;display:inline-block;transition:all .2s}
+.final-cta .btn-dark:hover{background:#1a1a2e;transform:translateY(-2px)}
+
+/* FOOTER */
+footer{background:var(--black);border-top:1px solid var(--border);padding:32px 5%;display:flex;align-items:center;justify-content:space-between}
+.footer-logo{font-family:'Bebas Neue',sans-serif;font-size:1.3rem;color:var(--gold);letter-spacing:2px}
+footer p{font-size:0.8rem;color:var(--gray)}
+
+/* RESPONSIVE */
+@media(max-width:768px){
+  .hero-inner,.ai-inner,.pricing-grid,.testimonial-grid{grid-template-columns:1fr}
+  .problem-grid,.framework-grid,.module-content{grid-template-columns:1fr}
+  .hero-card{display:none}
+  .hero-proof{gap:20px}
+  .price-card.featured{transform:none}
+  footer{flex-direction:column;gap:12px;text-align:center}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-inner">
+    <div class="nav-logo">InfinetT</div>
+    <a href="#pricing" class="nav-cta">Enroll Now</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-inner">
+    <div>
+      <p class="hero-eyebrow">⚡ AI Value Trading System</p>
+      <h1>Stop Guessing.<br/>Start <span>Executing.</span></h1>
+      <p class="hero-sub">Learn how to read liquidity like institutions, execute precision entries, and use AI to build consistent income — from scratch or experienced.</p>
+      <div class="hero-cta-group">
+        <a href="#pricing" class="btn-primary">Get Instant Access</a>
+        <a href="#modules" class="btn-secondary">See All Modules ↓</a>
+      </div>
+      <div class="hero-proof">
+        <div class="proof-item"><div class="proof-num">9</div><div class="proof-label">Modules</div></div>
+        <div class="proof-item"><div class="proof-num">8</div><div class="proof-label">AI Tools</div></div>
+        <div class="proof-item"><div class="proof-num">1:3+</div><div class="proof-label">Min R:R</div></div>
+      </div>
+    </div>
+    <div class="hero-card">
+      <h3>The I.N.F.I.N.E.T.T. Formula</h3>
+      <div class="formula">
+        <span class="formula-step">Identify</span><span class="formula-arrow">→</span>
+        <span class="formula-step">Notice</span><span class="formula-arrow">→</span>
+        <span class="formula-step">Find</span><span class="formula-arrow">→</span>
+        <span class="formula-step">Imbalance</span><span class="formula-arrow">→</span>
+        <span class="formula-step">Navigate</span><span class="formula-arrow">→</span>
+        <span class="formula-step">Execute</span><span class="formula-arrow">→</span>
+        <span class="formula-step">Target</span><span class="formula-arrow">→</span>
+        <span class="formula-step">Track</span>
+      </div>
+      <ul class="checklist">
+        <li>No more random entries — every trade has a reason</li>
+        <li>AI validates your setup before you risk capital</li>
+        <li>Institutional logic, simplified for execution</li>
+        <li>Works on Forex, Futures (ES, NQ), and Indices</li>
+        <li>Prop firm tested — built for funded accounts</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- PROBLEM -->
+<section class="problem">
+  <div class="section-inner">
+    <p class="section-tag">The Problem</p>
+    <h2 class="section-title">Why 90% of Traders Fail</h2>
+    <p class="section-sub">It's not intelligence. It's not capital. It's the absence of a real system.</p>
+    <div class="problem-grid">
+      <div class="problem-card"><h4>No Structure</h4><p>Trading on feelings, news, or random signals instead of a proven model with clear rules.</p></div>
+      <div class="problem-card"><h4>Ignoring Liquidity</h4><p>Institutions hunt your stop losses. Without understanding this, you'll keep getting trapped.</p></div>
+      <div class="problem-card"><h4>Poor Risk Management</h4><p>One bad trade wipes out 10 good ones. Most traders risk too much, too often, too early.</p></div>
+      <div class="problem-card"><h4>No Feedback Loop</h4><p>Without journaling, review, and data — you repeat the same mistakes on a bigger account.</p></div>
+    </div>
+    <div class="vs-divider"><span>THE SOLUTION</span></div>
+    <p style="text-align:center;color:var(--gold);font-family:'Bebas Neue',sans-serif;font-size:2rem;letter-spacing:2px">Trade With InfinetT gives you the full system.</p>
+  </div>
+</section>
+
+<!-- FRAMEWORK -->
+<section>
+  <div class="section-inner">
+    <p class="section-tag">Your Edge</p>
+    <h2 class="section-title">The I.N.F.I.N.E.T.T. Framework</h2>
+    <p class="section-sub">8 steps. Every trade. No exceptions. This becomes your operating system.</p>
+    <div class="framework-grid">
+      <div class="fw-card"><div class="fw-letter">I</div><div class="fw-word">Identify</div><div class="fw-desc">Trend direction on higher timeframes. 4H and Daily define the bias.</div></div>
+      <div class="fw-card"><div class="fw-letter">N</div><div class="fw-word">Notice</div><div class="fw-desc">Map liquidity pools. Equal highs, equal lows, session levels.</div></div>
+      <div class="fw-card"><div class="fw-letter">F</div><div class="fw-word">Find</div><div class="fw-desc">Displacement — a strong, aggressive move after a liquidity sweep.</div></div>
+      <div class="fw-card"><div class="fw-letter">I</div><div class="fw-word">Imbalance</div><div class="fw-desc">Fair Value Gap formed by the displacement. This is your entry zone.</div></div>
+      <div class="fw-card"><div class="fw-letter">N</div><div class="fw-word">Navigate</div><div class="fw-desc">Identify the optimal entry — 50% of FVG or full fill confirmation.</div></div>
+      <div class="fw-card"><div class="fw-letter">E</div><div class="fw-word">Execute</div><div class="fw-desc">Enter with your stop behind liquidity. Defined risk, defined target.</div></div>
+      <div class="fw-card"><div class="fw-letter">T</div><div class="fw-word">Target</div><div class="fw-desc">Next liquidity level. Previous highs/lows, equal levels, session marks.</div></div>
+      <div class="fw-card"><div class="fw-letter">T</div><div class="fw-word">Track</div><div class="fw-desc">Journal, review, improve. Data turns a strategy into a business.</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- MODULES -->
+<section class="modules" id="modules">
+  <div class="section-inner">
+    <p class="section-tag">Course Content</p>
+    <h2 class="section-title">9 Modules. One Complete System.</h2>
+    <p class="section-sub">Each module builds on the last — from foundation to funded account.</p>
+    <div class="module-list" id="moduleList">
+      <div class="module-item open" data-idx="0">
+        <div class="module-header" onclick="toggleModule(0)">
+          <div class="module-num">01</div>
+          <div class="module-title">Think Like Smart Money</div>
+          <div class="module-tag">Foundation</div>
+          <span class="module-chevron">▾</span>
+        </div>
+        <div class="module-body"><ul class="module-content">
+          <li>What REALLY moves price — liquidity, not indicators</li><li>Retail vs institutional mindset</li>
+          <li>Market structure: HH, HL, LH, LL explained</li><li>Why 90% of traders fail (and how to not be them)</li>
+          <li class="module-outcome">Outcome: You stop gambling and start thinking in probabilities</li>
+        </ul></div>
+      </div>
+      <div class="module-item" data-idx="1">
+        <div class="module-header" onclick="toggleModule(1)">
+          <div class="module-num">02</div>
+          <div class="module-title">The InfinetT Model</div>
+          <div class="module-tag">Core Strategy</div>
+          <span class="module-chevron">▾</span>
+        </div>
+        <div class="module-body"><ul class="module-content">
+          <li>Liquidity → Displacement → Entry model</li><li>Supply & Demand + Order Blocks</li>
+          <li>Fair Value Gaps (FVG) deep dive</li><li>Market structure mastery</li>
+          <li class="module-outcome">Outcome: You know exactly WHEN conditions are valid to trade</li>
+        </ul></div>
+      </div>
+      <div class="module-item" data-idx="2">
+        <div class="module-header" onclick="toggleModule(2)">
+          <div class="module-num">03</div>
+          <div class="module-title">Sniper Entry System</div>
+          <div class="module-tag">Execution</div>
+          <span class="module-chevron">▾</span>
+        </div>
+        <div class="module-body"><ul class="module-content">
+          <li>The 7-step buy & sell model (step-by-step)</li><li>Liquidity sweeps — how traps are set</li>
+          <li>Break of Structure (BOS) confirmation</li><li>Aggressive vs confirmation entries</li>
+          <li class="module-outcome">Outcome: You know EXACTLY when and where to pull the trigger</li>
+        </ul></div>
+      </div>
+      <div class="module-item" data-idx="3">
+        <div class="module-header" onclick="toggleModule(3)">
+          <div class="module-num">04</div>
+          <div class="module-title">Risk & Consistency System</div>
+          <div class="module-tag">Money Management</div>
+          <span class="module-chevron">▾</span>
+        </div>
+        <div class="module-body"><ul class="module-content">
+          <li>1–2% risk per trade — non-negotiable</li><li>Minimum 1:3 risk-to-reward strategy</li>
+          <li>Daily trade limits (2 max)</li><li>Losing streak control protocol</li>
+          <li class="module-outcome">Outcome: You stop blowing accounts and start compounding</li>
+        </ul></div>
+      </div>
+      <div class="module-item" data-idx="4">
+        <div class="module-header" onclick="toggleModule(4)">
+          <div class="module-num">05</div>
+          <div class="module-title">AI Value Trading System</div>
+          <div class="module-tag">⚡ Unique Edge</div>
+          <span class="module-chevron">▾</span>
+        </div>
+        <div class="module-body"><ul class="module-content">
+          <li>Using AI to analyze charts instantly</li><li>AI trade checklist automation</li>
+          <li>AI journaling & trade review system</li><li>Build your personal AI trading assistant</li>
+          <li class="module-outcome">Outcome: You trade with AI feedback on every single setup</li>
+        </ul></div>
+      </div>
+      <div class="module-item" data-idx="5">
+        <div class="module-header" onclick="toggleModule(5)">
+          <div class="module-num">06</div>
+          <div class="module-title">Timing & Sessions</div>
+          <div class="module-tag">Kill Zones</div>
+          <span class="module-chevron">▾</span>
+        </div>
+        <div class="module-body"><ul class="module-content">
+          <li>London Kill Zone: 2–5 AM EST (trend setups)</li><li>NY Kill Zone: 7–10 AM EST (continuations)</li>
+          <li>Why 80% of moves happen in 20% of the time</li><li>When NOT to trade (saved accounts)</li>
+          <li class="module-outcome">Outcome: You trade less, but win significantly more</li>
+        </ul></div>
+      </div>
+      <div class="module-item" data-idx="6">
+        <div class="module-header" onclick="toggleModule(6)">
+          <div class="module-num">07</div>
+          <div class="module-title">Backtesting & Data System</div>
+          <div class="module-tag">Proof</div>
+          <span class="module-chevron">▾</span>
+        </div>
+        <div class="module-body"><ul class="module-content">
+          <li>TradingView replay — how to backtest correctly</li><li>Tracking win rate, RR, session data</li>
+          <li>Pre-built Notion journal template (included)</li><li>Google Sheets trade tracker (included)</li>
+          <li class="module-outcome">Outcome: You become data-driven. Emotions leave the building.</li>
+        </ul></div>
+      </div>
+      <div class="module-item" data-idx="7">
+        <div class="module-header" onclick="toggleModule(7)">
+          <div class="module-num">08</div>
+          <div class="module-title">Psychology & Discipline</div>
+          <div class="module-tag">Mindset</div>
+          <span class="module-chevron">▾</span>
+        </div>
+        <div class="module-body"><ul class="module-content">
+          <li>Eliminating revenge trading permanently</li><li>Emotional control protocols</li>
+          <li>Building a trader's identity and routine</li><li>Accepting losses as data, not failure</li>
+          <li class="module-outcome">Outcome: You execute the system without ego interfering</li>
+        </ul></div>
+      </div>
+      <div class="module-item" data-idx="8">
+        <div class="module-header" onclick="toggleModule(8)">
+          <div class="module-num">09</div>
+          <div class="module-title">Trader → Income System</div>
+          <div class="module-tag">Scale</div>
+          <span class="module-chevron">▾</span>
+        </div>
+        <div class="module-body"><ul class="module-content">
+          <li>Passing prop firm challenges with the InfinetT model</li><li>Scaling funded accounts strategically</li>
+          <li>Creating income streams: signals, content, community</li><li>Mentorship & course creation roadmap</li>
+          <li class="module-outcome">Outcome: Your skill becomes a scalable income machine</li>
+        </ul></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- AI SECTION -->
+<section class="ai-section">
+  <div class="section-inner">
+    <div class="ai-inner">
+      <div>
+        <div class="ai-badge">🤖 AI-Powered</div>
+        <h2 class="section-title">Your Personal AI<br/>Trading Assistant</h2>
+        <p style="color:var(--gray);line-height:1.7;margin-bottom:0">This is what separates Trade With InfinetT from every other course. We don't just teach — we give you AI tools that work alongside your analysis.</p>
+        <div class="ai-features">
+          <div class="ai-feat"><span class="ai-feat-icon">📸</span><div><h4>Screenshot Analysis</h4><p>Upload any chart. Ask AI to validate your setup against the InfinetT checklist.</p></div></div>
+          <div class="ai-feat"><span class="ai-feat-icon">✅</span><div><h4>Pre-Trade Validation</h4><p>AI runs through all 6 checklist items before you risk a single dollar.</p></div></div>
+          <div class="ai-feat"><span class="ai-feat-icon">📓</span><div><h4>Trade Journal Review</h4><p>Weekly AI review finds patterns in your wins and losses automatically.</p></div></div>
+          <div class="ai-feat"><span class="ai-feat-icon">🎯</span><div><h4>Daily Bias Generator</h4><p>AI-assisted morning briefing: key levels, session bias, trade plan.</p></div></div>
+        </div>
+      </div>
+      <div class="ai-chat-preview">
+        <div class="chat-header"><div class="chat-dot"></div><div class="chat-name">InfinetT AI Assistant</div></div>
+        <div class="chat-body">
+          <div class="chat-msg user">NQ 15min — price just swept equal lows, strong bullish candle. Is this valid?</div>
+          <div class="chat-msg ai"><strong>Checklist check:</strong><br/>✓ HTF (4H) = Bullish bias confirmed<br/>✓ Liquidity sweep of equal lows ✓<br/>✓ Strong displacement candle present<br/>✓ BOS upward after sweep<br/>⚠ Wait for FVG to form on 5M<br/>⚠ Confirm you're in NY kill zone<br/><br/><strong>Verdict: High-probability setup forming. Wait for pullback into FVG before entry.</strong></div>
+          <div class="chat-msg user">FVG confirmed on 5M. Time is 8:42 AM EST.</div>
+          <div class="chat-msg ai"><strong>All 6 criteria met. ✓</strong><br/>Entry at FVG 50% level. Stop below sweep low. Target = previous session high. R:R ≈ 1:4<br/><br/><em>Execute with discipline.</em></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section id="pricing">
+  <div class="section-inner">
+    <p class="section-tag">Enrollment</p>
+    <h2 class="section-title">Choose Your Level</h2>
+    <p class="section-sub">All tiers include lifetime access. No monthly fees. No fluff.</p>
+    <div class="pricing-grid">
+      <div class="price-card">
+        <div class="price-tier">Starter</div>
+        <div class="price-amount">$97</div>
+        <div class="price-note">One-time payment</div>
+        <div class="price-divider"></div>
+        <ul class="price-features">
+          <li>Modules 1–4 (Core System)</li>
+          <li>Entry checklist PDF</li>
+          <li>Risk calculator tool</li>
+          <li>Market structure guide</li>
+          <li class="locked">AI toolkit & prompts</li>
+          <li class="locked">Trading journal templates</li>
+          <li class="locked">Community access</li>
+          <li class="locked">Mentorship calls</li>
+        </ul>
+        <a href="#" class="price-btn">Get Started</a>
+      </div>
+      <div class="price-card featured">
+        <div class="price-tier">Pro</div>
+        <div class="price-amount">$397</div>
+        <div class="price-note">One-time payment</div>
+        <div class="price-divider"></div>
+        <ul class="price-features">
+          <li>All 9 modules (full system)</li>
+          <li>AI toolkit + prompt library</li>
+          <li>Notion journal template</li>
+          <li>Google Sheets tracker</li>
+          <li>Private community access</li>
+          <li>ChatGPT trade assistant setup</li>
+          <li>Prop firm strategy guide</li>
+          <li class="locked">1-on-1 mentorship</li>
+        </ul>
+        <a href="#" class="price-btn featured-btn">Enroll in Pro</a>
+      </div>
+      <div class="price-card">
+        <div class="price-tier">Elite</div>
+        <div class="price-amount">$997</div>
+        <div class="price-note">One-time payment</div>
+        <div class="price-divider"></div>
+        <ul class="price-features">
+          <li>Everything in Pro</li>
+          <li>3× 1-on-1 mentorship calls</li>
+          <li>Live trade reviews (monthly)</li>
+          <li>Personal feedback on setups</li>
+          <li>Prop firm challenge support</li>
+          <li>Priority community support</li>
+          <li>Income stream strategy session</li>
+          <li>Direct access to Nicholas</li>
+        </ul>
+        <a href="#" class="price-btn">Apply for Elite</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="testimonials">
+  <div class="section-inner">
+    <p class="section-tag">Results</p>
+    <h2 class="section-title">What Students Are Saying</h2>
+    <div class="testimonial-grid">
+      <div class="testi-card">
+        <div class="testi-stars">★★★★★</div>
+        <p class="testi-text">"Before this course I was gambling. Now I have a real system. Passed my $100K FTMO challenge on the first attempt using the InfinetT model."</p>
+        <div class="testi-author">Marcus T.</div><div class="testi-sub">FTMO Funded Trader</div>
+      </div>
+      <div class="testi-card">
+        <div class="testi-stars">★★★★★</div>
+        <p class="testi-text">"The AI toolkit alone is worth 10x the price. I screenshot my setups, run them through the checklist prompt, and my discipline went through the roof."</p>
+        <div class="testi-author">Jasmine K.</div><div class="testi-sub">Forex Trader, NQ Futures</div>
+      </div>
+      <div class="testi-card">
+        <div class="testi-stars">★★★★★</div>
+        <p class="testi-text">"I've bought 4 other courses. This is the first one where I actually understand WHY price moves. The liquidity concepts changed everything for me."</p>
+        <div class="testi-author">Dre M.</div><div class="testi-sub">Full-Time Trader</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- GUARANTEE -->
+<section class="guarantee">
+  <div class="section-inner" style="text-align:center">
+    <div class="guarantee-box">
+      <div class="guarantee-icon">🛡️</div>
+      <h3>30-Day Money-Back Guarantee</h3>
+      <p>Go through the first 4 modules, apply the system, and if you don't feel like you have a clearer edge — get a full refund. No questions asked. We're confident this works.</p>
+    </div>
+  </div>
+</section>
+
+<!-- FINAL CTA -->
+<section class="final-cta">
+  <h2>Ready to Stop Guessing?</h2>
+  <p>Join traders who execute with precision, discipline, and AI-powered clarity.</p>
+  <a href="#pricing" class="btn-dark">Get Instant Access →</a>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">Trade With InfinetT</div>
+  <p>© 2025 Trade With InfinetT. All rights reserved.</p>
+  <p style="font-size:0.75rem;color:var(--gray)">Trading involves risk. Results not guaranteed.</p>
+</footer>
+
+<script>
+function toggleModule(idx) {
+  const items = document.querySelectorAll('.module-item');
+  items[idx].classList.toggle('open');
+}
+</script>
+</body>
+</html>
